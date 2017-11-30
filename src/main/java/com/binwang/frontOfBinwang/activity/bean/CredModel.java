@@ -1,7 +1,7 @@
 package com.binwang.frontOfBinwang.activity.bean;
 
 /**
- * Created by owen on 17/7/3.
+ * 个人中心展示我的活动需要此model
  */
 public class CredModel {
     private String name;

@@ -10,7 +10,7 @@
          loc_about as address,cost as price,face_obj as faceObj,username FROM activity WHERE id = #{actId}
     </select>
     <select id="getRegItem" resultType="com.binwang.frontOfBinwang.activity.bean.RegItemModel">
-        SELECT id,username,reg,reg_item as regItem,name as title,reg_dead_line as regDeadLine FROM activity WHERE id=#{actId}
+        SELECT id,username,reg,reg_item as regItem,name as title,reg_dead_line as regDeadLine,description FROM activity WHERE id=#{actId}
     </select>
     <select id="getDetailReg" resultType="com.binwang.frontOfBinwang.activity.bean.DetailItemModel">
         SELECT id,title,dtype,ifneed,options,username FROM reg_item WHERE username=#{username}

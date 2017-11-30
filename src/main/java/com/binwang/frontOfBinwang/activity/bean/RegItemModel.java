@@ -1,21 +1,24 @@
+//获取活动的自带和自定义的报名项、报名规则
 package com.binwang.frontOfBinwang.activity.bean;
 
 public class RegItemModel {
     private Long id;
-    private String title;
+    private String title;//活动名称
     private String username;
     private String regDeadLine;
-    private String reg;
+    private String reg;//活动选择的自带的报名项
     private String regItem;
+    private String description;//活动规则
 
     public RegItemModel(){}
-    public RegItemModel(Long id,String reg,String regItem,String title,String regDeadLine,String username){
+    public RegItemModel(Long id,String reg,String regItem,String title,String regDeadLine,String username,String description){
         this.id=id;
         this.reg=reg;
         this.regItem=regItem;
         this.title=title;
         this.regDeadLine=regDeadLine;
         this.username=username;
+        this.description=description;
     }
     public Long getId() {
         return id;
@@ -65,6 +68,12 @@ public class RegItemModel {
         this.username = username;
     }
 
+    public String getDescription() {
+        return description;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
 

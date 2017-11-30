@@ -1,3 +1,4 @@
+//详细报名项要求
 package com.binwang.frontOfBinwang.activity.bean;
 
 public class DetailItemModel {
