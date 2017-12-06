@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 import javax.management.RuntimeErrorException;
 
 /**
- * Created by owen on 17/6/28.
+ * Created by yy on 17/12/28.
  */
 @Service
 public class VerifyCodeImpl implements VerifyCode {

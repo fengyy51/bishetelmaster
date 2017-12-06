@@ -8,7 +8,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 
 /**
- * Created by owen on 17/6/22.
+ * Created by yy .
  */
 public class ResponseUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(ResponseUtil.class);

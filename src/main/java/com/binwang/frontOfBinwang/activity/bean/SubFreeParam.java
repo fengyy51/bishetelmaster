@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by owen on 17/6/30.
+ * Created by yy
  */
 public class SubFreeParam {
     private long id;

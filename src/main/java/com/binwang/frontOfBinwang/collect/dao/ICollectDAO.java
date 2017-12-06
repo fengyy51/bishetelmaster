@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 /**
- * Created by owen on 17/7/12.
+ * Created by yy
  */
 @Repository
 @Mapper

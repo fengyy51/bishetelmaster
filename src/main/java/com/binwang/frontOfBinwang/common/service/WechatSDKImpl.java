@@ -22,7 +22,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
 
 /**
- * Created by owen on 17/7/19.
+ * Created by yy on 17/12/19.
  */
 @Service
 public class WechatSDKImpl implements WechatSDK {

@@ -4,6 +4,7 @@ package com.binwang.frontOfBinwang.vote.service;
 import com.binwang.frontOfBinwang.utils.HandleDateUtil;
 import com.binwang.frontOfBinwang.vote.bean.ProductInfo;
 import com.binwang.frontOfBinwang.vote.bean.VoteInfo;
+import com.binwang.frontOfBinwang.vote.bean.VoteParam;
 import com.binwang.frontOfBinwang.vote.bean.VoteRecord;
 import com.binwang.frontOfBinwang.vote.dao.VoteDao;
 import com.binwang.frontOfBinwang.vote.redis.VoteRAO;
@@ -21,7 +22,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.RunnableFuture;
 
 /**
- * Created by think on 2017/7/13.
+ * Created by yy .
  */
 @Service
 public class VoteServiceImpl implements VoteService {
@@ -56,8 +57,11 @@ public class VoteServiceImpl implements VoteService {
     }
 
     @Override
-    public List<ProductInfo> getProductInfo() {
-        return voteDAO.getProductInfo();
+    @Transactional
+    public VoteParam getVoteParam(long actId){return voteDAO.getVoteParam(actId);}
+    @Override
+    public List<ProductInfo> getProductInfo(long actId) {
+        return voteDAO.getProductInfo(actId);
     }
 
     @Override
