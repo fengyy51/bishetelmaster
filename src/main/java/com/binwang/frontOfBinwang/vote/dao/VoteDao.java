@@ -17,7 +17,7 @@ import java.util.List;
 @Repository
 @Mapper
 public interface VoteDao {
-    @Select("select act_name as actName,begin,end,pro_num as proNum,vote_num as voteNum,share_num as shareNum,vote_decoration as voteDecoration,pro_approved as proApproved from vote_params where act_id=#{actId}")
+    @Select("select act_name as actName,begin,end,pro_num as proNum,vote_num as voteNum,share_num as shareNum,vote_max_num as voteMaxNum,vote_decoration as voteDecoration,pro_approved as proApproved from vote_params where act_id=#{actId}")
     VoteParam getVoteParam(@Param("actId")long actId);
     @Select("select a.id,a.vote_num as voteNum,a.item_id as itemId,b.product_first as productFirst,b.product_img_urls as productImgUrls from f_vote a,f_collect b where a.item_id=b.id and b.is_ok = 1 order by a.vote_num DESC")
     List<VoteInfo> getVoteInfo();
