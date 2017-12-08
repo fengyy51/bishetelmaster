@@ -1,49 +1,52 @@
 package com.binwang.frontOfBinwang.vote.bean;
 
 /**
- * Created by think on 2017/7/13.
+ * Created by yy on 2017/12/13.
  */
 
 public class VoteInfo {
-    private int id;
+//    private int id;
+    private long actId;//活动id
+    private String productInfo;
+    //private int id;
     private int voteNum;
-    private String productFirst;
-    private int itemId;
-    private String productImgUrls;
+//    private String productFirst;
+    private int itemId;//作品id
+//    private String productImgUrls;
 
     public VoteInfo(){
     }
 
-    public String getProductImgUrls() {
-        return productImgUrls;
+    public long getActId() {
+        return actId;
     }
 
-    public void setProductImgUrls(String productImgUrls) {
-        this.productImgUrls = productImgUrls;
+    public void setActId(long actId) {
+        this.actId = actId;
     }
 
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
+    public void setProductInfo(String productInfo) {
+        this.productInfo = productInfo;
     }
+
+    public String getProductInfo() {
+        return productInfo;
+    }
+
+//    public int getId() {
+//        return id;
+//    }
+//
+//    public void setId(int id) {
+//        this.id = id;
+//    }
 
     public int getItemId() {
         return itemId;
     }
 
-    public String getProductFirst() {
-        return productFirst;
-    }
-
-    public void setProductFirst(String productFirst) {
-        this.productFirst = productFirst;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 
     public int getVoteNum() {

@@ -1,7 +1,7 @@
 package com.binwang.frontOfBinwang.vote.redis;
 
 /**
- * Created by owen on 17/8/21.
+ * Created by yy .
  */
 public interface VoteRAO {
     Boolean judgeAuthOpenId(String openId);

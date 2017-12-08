@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by owen on 17/8/21.
+ * Created by yy .
  */
 @Repository
 public class VoteRAOImpl extends RedisFather implements VoteRAO {

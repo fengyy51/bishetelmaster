@@ -68,9 +68,9 @@ public class VoteController {
 
     @RequestMapping("/get-vote-number-info")
     @ResponseBody
-    public Object getVoteNumInfo() {
+    public Object getVoteNumInfo(@Param("actId") long actId) {
         try {
-            List<VoteInfo> res = voteService.getVoteInfo();
+            List<VoteInfo> res = voteService.getVoteInfo(actId);
             return ResponseUtil.okJSON(res);
         } catch (Exception e) {
             LOGGER.error("获取投票初始数据出错");
@@ -84,23 +84,23 @@ public class VoteController {
 
     @RequestMapping(value = "/post-vote-number-info", method = RequestMethod.POST)
     @ResponseBody
-    public Object postVoteNumInfo(String str, HttpServletRequest req) {
+    public Object postVoteNumInfo(String str,long actId, HttpServletRequest req) {
         try {
             RateLimiter limiter = RateLimiter.create(voteTokens);
             if (!limiter.tryAcquire(1, TimeUnit.SECONDS)) {
                 return ResponseUtil.errorJSON("请稍后再试");
             } else {
-                if (System.currentTimeMillis() > voteDeadline) {
-                    Map<String, Object> mm = new HashMap<>();
-                    mm.put("result", false);
-                    mm.put("msg", "投票已截止");
-                    return ResponseUtil.okJSON(mm);
-                } else {
+//                if (System.currentTimeMillis() > voteDeadline) {
+//                    Map<String, Object> mm = new HashMap<>();
+//                    mm.put("result", false);
+//                    mm.put("msg", "投票已截止");
+//                    return ResponseUtil.okJSON(mm);
+//                } else {
                     String ip = req.getRemoteAddr();
                     String userAgent = req.getHeader("user-agent");
-                    Map<String, Object> m = voteService.postInfo(str, ip, userAgent);
+                    Map<String, Object> m = voteService.postInfo(str,actId, ip, userAgent);
                     return ResponseUtil.okJSON(m);
-                }
+//                }
             }
         } catch (Exception e) {
             return ResponseUtil.errorJSON("数据提交失败");

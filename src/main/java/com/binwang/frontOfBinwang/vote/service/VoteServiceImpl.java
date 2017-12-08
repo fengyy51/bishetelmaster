@@ -8,6 +8,7 @@ import com.binwang.frontOfBinwang.vote.bean.VoteParam;
 import com.binwang.frontOfBinwang.vote.bean.VoteRecord;
 import com.binwang.frontOfBinwang.vote.dao.VoteDao;
 import com.binwang.frontOfBinwang.vote.redis.VoteRAO;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -66,7 +67,7 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     @Transactional
-    public Map<String, Object> postInfo(String str, String ip,String userAgent) {
+    public Map<String, Object> postInfo(String str, long actId,String ip,String userAgent) {
         String[] s = str.split("@@@");
         long jsCurTime = Long.parseLong(s[1]);
         String openId = s[2];
@@ -77,22 +78,23 @@ public class VoteServiceImpl implements VoteService {
             m.put("msg","投票成功");
             return m;
         }
-        if(!voteRAO.judgeAuthOpenId(openId)){
-            m.put("result",true);
-            m.put("msg","投票成功");
-            return m;
-        }
-        if(!voteRAO.judgeIsVote(openId)) {
-            m.put("result",true);
-            m.put("msg","投票成功");
-            return m;
-        }
+//        if(!voteRAO.judgeAuthOpenId(openId)){
+//            m.put("result", false);
+//            m.put("msg", "openid不是有效值");
+//            return m;
+//        }
+//        if(!voteRAO.judgeIsVote(openId)) {
+//            m.put("result", false);
+//            m.put("msg", "已投票");
+//            return m;
+//        }
         if (jsCurTime < HandleDateUtil.getTimesmorning() || jsCurTime > HandleDateUtil.getTimesnight()) {
             m.put("result", false);
             m.put("msg", "请确保当日投票");
             return m;
         }
-        VoteRecord vr = new VoteRecord(ip,"," + s[0],userAgent);
+
+        VoteRecord vr = new VoteRecord(actId,ip,"," + s[0],userAgent);
         writeVoteRecordPool.execute(new WriteVoteRecord(vr));
         String[] a = s[0].split(",");
         List<String> b = java.util.Arrays.asList(a);
@@ -101,7 +103,9 @@ public class VoteServiceImpl implements VoteService {
             list.add(Integer.parseInt(it.next()));
         }
         for (Integer i : list) {
-            int res = voteDAO.setVoteNum(i);
+//            LOGGER.info(String.valueOf(i));
+            int res = voteDAO.setVoteNum(i,actId);
+//            LOGGER.info(String.valueOf(res));
             if (res <= 0) {
                 LOGGER.error("投票计数出错，itemId：" + i);
                 throw new RuntimeException("出错");
@@ -114,15 +118,16 @@ public class VoteServiceImpl implements VoteService {
     }
 
     @Override
-    public List<VoteInfo> getVoteInfo() {
-        List<VoteInfo> l = voteDAO.getVoteInfo();
-        List<VoteInfo> newL = new ArrayList<>();
-        for (VoteInfo v : l) {
-            if (StringUtils.isEmpty(v.getProductFirst())) {
-                v.setProductFirst(v.getProductImgUrls().split("@@@")[0]);
-            }
-            newL.add(v);
-        }
-        return newL;
+    @Transactional
+    public List<VoteInfo> getVoteInfo( long actId) {
+        List<VoteInfo> l = voteDAO.getVoteInfo(actId);
+//        List<VoteInfo> newL = new ArrayList<>();
+//        for (VoteInfo v : l) {
+//            if (StringUtils.isEmpty(v.getProductFirst())) {
+//                v.setProductFirst(v.getProductImgUrls().split("@@@")[0]);
+//            }
+//            newL.add(v);
+//        }
+        return l;
     }
 }
