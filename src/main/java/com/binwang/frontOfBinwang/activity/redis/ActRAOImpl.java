@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.Resource;
 
 /**
- * Created by owen on 17/6/29.
+ * Created by yy on 17/6/29.
  */
 @Repository
 public class ActRAOImpl extends RedisFather implements ActRAO {

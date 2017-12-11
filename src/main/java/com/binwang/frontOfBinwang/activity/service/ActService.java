@@ -33,5 +33,7 @@ public interface ActService {
 
     //判断是否报名
     Boolean isSignUp(String openId, long actId);
+//    取消报名
+    Boolean cancelReg(long actId,String openId);
 
 }

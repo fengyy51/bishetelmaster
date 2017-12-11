@@ -1,7 +1,7 @@
 package com.binwang.frontOfBinwang.activity.redis;
 
 /**
- * Created by owen on 17/6/29.
+ * Created by yy on 17/6/29.
  */
 public interface ActRAO {
     //获取活动已报名人数，若没有初始化返回-1

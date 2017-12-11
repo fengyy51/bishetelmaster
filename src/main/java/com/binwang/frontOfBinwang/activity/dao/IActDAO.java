@@ -26,6 +26,9 @@ public interface IActDAO {
     @Select("select count(id) from f_user_act where open_id = #{openId} and act_id = #{actId}")
     int isSignUp(@Param("openId") String openId, @Param("actId") long actId);
 
+    @Delete("delete from f_user_act where open_id=#{openId} and act_id=#{actId}")
+    int cancelReg(@Param("openId") String openId, @Param("actId") long actId);
+
     @Select("select a.status as status,a.credential_code as credCode,b.name as name, " +
             "b.begin as startActivityTime,b.end as endActivityTime,b.loc_about as address,a.is_sign as sign " +
             "from f_user_act a left join activity b on a.act_id = b.id where a.open_id = #{openId} " +

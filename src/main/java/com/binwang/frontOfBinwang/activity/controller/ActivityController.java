@@ -3,6 +3,7 @@ package com.binwang.frontOfBinwang.activity.controller;
 import com.binwang.frontOfBinwang.activity.bean.*;
 import com.binwang.frontOfBinwang.activity.service.ActService;
 import com.binwang.frontOfBinwang.utils.ResponseUtil;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -125,7 +126,18 @@ public class ActivityController {
             return ResponseUtil.errorJSON("活动报名失败");
         }
     }
-
+    @RequestMapping("/cancel-reg")
+    @ResponseBody
+    public Object CancelReg(@Param("actId")long actId,@Param("openId")String openId) {
+        try {
+            Boolean result= actService.cancelReg(actId,openId);
+            Map<String, Boolean> m = new HashMap<>();
+            m.put("result", result);
+            return ResponseUtil.okJSON(m);
+        } catch (Exception e) {
+            return ResponseUtil.errorJSON("取消报名失败");
+        }
+    }
     @RequestMapping("/submit/not-free")
     @ResponseBody
     public Object submitNotFree() {

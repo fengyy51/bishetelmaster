@@ -163,7 +163,22 @@ public class ActServiceImpl implements ActService {
         else
             return false;
     }
-
+    @Override
+    @Transactional
+    public Boolean cancelReg(long actId,String openId){
+        if (StringUtils.isEmpty(openId) || actId <= 0)
+            throw new ParamNotValidException("参数不合法");
+        try {
+            int res = actDAO.cancelReg(openId, actId);
+            if (res > 0)
+                return true;
+            else
+                return false;
+        } catch (Exception e) {
+            LOGGER.error("取消报名出错，openId为:" + openId + ",actId为:" + actId);
+            throw new RuntimeException("出错");
+        }
+    }
     @Override
 //    @Cacheable(value = "thirtyMinutes", keyGenerator = "wiselyKeyGenerator")
     public CredModel getCredDetail(String openId, long actId) {
