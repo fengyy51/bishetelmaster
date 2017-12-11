@@ -1,7 +1,7 @@
 package com.binwang.frontOfBinwang.common.bean;
 
 /**
- * Created by owen on 17/7/19.
+ * Created by yy on 18/7/19.
  */
 public class WechatSdkConfig {
     private String appId;

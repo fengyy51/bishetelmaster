@@ -43,7 +43,7 @@ public class WechatSDKImpl implements WechatSDK {
         try {
             String nonceStr = UUIDUtil.getNativeUUID();
             String timestamp = System.currentTimeMillis() + "";
-            String jsapiTicket = getJsApiTicket();
+            String jsapiTicket = getJsApiTicket();//。jsapi_ticket是公众号用于调用微信JS接口的临时票据 正常情况下，jsapi_ticket的有效期为7200秒，通过access_token来获
             // 注意这里参数名必须全部小写，且必须有序
             String string1 = "jsapi_ticket=" + jsapiTicket + "&noncestr=" + nonceStr
                     + "&timestamp=" + timestamp + "&url=" + url;

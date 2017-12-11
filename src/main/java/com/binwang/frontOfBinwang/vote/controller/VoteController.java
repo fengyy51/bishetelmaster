@@ -78,8 +78,8 @@ public class VoteController {
         }
     }
 
-    @Value("${fbinwang.vote.deadline}")
-    private long voteDeadline;
+//    @Value("${fbinwang.vote.deadline}")
+//    private long voteDeadline;
 
 
     @RequestMapping(value = "/post-vote-number-info", method = RequestMethod.POST)
