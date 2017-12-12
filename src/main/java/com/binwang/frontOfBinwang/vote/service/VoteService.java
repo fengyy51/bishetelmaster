@@ -12,6 +12,8 @@ import java.util.Map;
  * Created by yy
  */
 public interface VoteService {
+    //获取每个用户当天投票数
+    int getVoteNum(long actId,String openId);
     VoteParam getVoteParam(long actId);
     List<VoteInfo> getVoteInfo(long actId);
     List<ProductInfo> getProductInfo(long actId);

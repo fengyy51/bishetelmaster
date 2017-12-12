@@ -36,6 +36,17 @@ public class VoteController {
 
     @Value("${fbinwang.vote.post.tokens}")
     private int voteTokens;
+    @RequestMapping("/get-vote-num")
+    @ResponseBody
+    public Object getVoteNum(@Param("actId")long actId,@Param("openId")String openId){
+        try {
+            int res=voteService.getVoteNum(actId,openId);
+            return ResponseUtil.okJSON(res);
+        }catch (Exception e){
+            LOGGER.error("获取投票次数出错");
+            return ResponseUtil.errorJSON("获取投票次数失败");
+        }
+    }
     @RequestMapping("/get-vote-param")
     @ResponseBody
     public Object getVoteParam(@Param("actId")long actId){
@@ -84,7 +95,7 @@ public class VoteController {
 
     @RequestMapping(value = "/post-vote-number-info", method = RequestMethod.POST)
     @ResponseBody
-    public Object postVoteNumInfo(String str,long actId, HttpServletRequest req) {
+    public Object postVoteNumInfo(String str,long actId,HttpServletRequest req) {
         try {
             RateLimiter limiter = RateLimiter.create(voteTokens);
             if (!limiter.tryAcquire(1, TimeUnit.SECONDS)) {
@@ -98,7 +109,7 @@ public class VoteController {
 //                } else {
                     String ip = req.getRemoteAddr();
                     String userAgent = req.getHeader("user-agent");
-                    Map<String, Object> m = voteService.postInfo(str,actId, ip, userAgent);
+                    Map<String, Object> m = voteService.postInfo(str,actId,ip, userAgent);
                     return ResponseUtil.okJSON(m);
 //                }
             }

@@ -36,7 +36,7 @@ public class VoteServiceImpl implements VoteService {
     @Resource
     private VoteRAO voteRAO;
 
-    //写记录线程
+    //写记录线程 创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。
     private final ExecutorService writeVoteRecordPool = Executors.newFixedThreadPool(8);
 
     private class WriteVoteRecord implements Runnable {
@@ -47,9 +47,13 @@ public class VoteServiceImpl implements VoteService {
         }
 
         @Override
+        //插入到f_user_vote中
         public void run() {
-            voteDAO.insertVoteRecord(voteRecord);
+            voteDAO.insertUserVote(voteRecord);
         }
+//        public void run() {
+//            voteDAO.insertVoteRecord(voteRecord);
+//        }
     }
 
     @Override
@@ -60,6 +64,9 @@ public class VoteServiceImpl implements VoteService {
     @Override
     @Transactional
     public VoteParam getVoteParam(long actId){return voteDAO.getVoteParam(actId);}
+    @Override
+    @Transactional
+    public int getVoteNum(long actId,String openId){return voteDAO.getVoteNum(actId,openId);}
     @Override
     public List<ProductInfo> getProductInfo(long actId) {
         return voteDAO.getProductInfo(actId);
@@ -94,7 +101,7 @@ public class VoteServiceImpl implements VoteService {
             return m;
         }
 
-        VoteRecord vr = new VoteRecord(actId,ip,"," + s[0],userAgent);
+        VoteRecord vr = new VoteRecord(actId,openId,ip,"," + s[0],userAgent);
         writeVoteRecordPool.execute(new WriteVoteRecord(vr));
         String[] a = s[0].split(",");
         List<String> b = java.util.Arrays.asList(a);
