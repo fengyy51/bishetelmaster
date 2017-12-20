@@ -1,7 +1,7 @@
 package com.binwang.frontOfBinwang.userCenter.bean.httpBean;
 
 /**
- * Created by owen on 17/6/23.
+ * Created by yy on 17/6/23.
  */
 public class UserInfoHttp {
     private String openid;

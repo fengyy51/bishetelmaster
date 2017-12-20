@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by owen on 17/6/22.
+ * Created by yy on 17/6/22.
  */
 @Controller
 @RequestMapping("/user")

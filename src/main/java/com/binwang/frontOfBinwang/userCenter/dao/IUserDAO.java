@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
- * Created by owen on 17/6/26.
+ * Created by yy on 17/6/26.
  */
 @Repository
 @Mapper

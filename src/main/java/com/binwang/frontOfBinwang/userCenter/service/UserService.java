@@ -3,7 +3,7 @@ package com.binwang.frontOfBinwang.userCenter.service;
 import java.util.Map;
 
 /**
- * Created by owen on 17/6/23.
+ * Created by yy on 17/6/23.
  */
 public interface UserService {
     //授权

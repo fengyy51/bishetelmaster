@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 /**
- * Created by owen on 17/6/23.
+ * Created by yy on 17/6/23.
  */
 @Repository
 public class UserRAOImpl extends RedisFather implements UserRAO {

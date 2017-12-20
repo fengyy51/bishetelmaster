@@ -27,6 +27,7 @@ public class RedisFather {
         try {
             ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
             ops.set(key, value);
+            System.out.println(value);
             if (expire != -1)
                 stringRedisTemplate.expire(key, expire, TimeUnit.SECONDS);
             return true;

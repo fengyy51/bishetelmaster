@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by owen on 17/6/22.
+ * Created by yy on 17/6/22.
  */
 @Configuration
 @EnableCaching
@@ -34,8 +34,8 @@ public class RedisConfig extends CachingConfigurerSupport {
     private int port;
     @Value("${spring.redis.timeout}")
     private int timeout;
-    @Value("${spring.redis.password}")
-    private String password;
+//    @Value("${spring.redis.password}")
+//    private String password;
     @Value("${spring.redis.database}")
     private int database;
     @Value("${spring.redis.pool.max-active}")
@@ -71,7 +71,7 @@ public class RedisConfig extends CachingConfigurerSupport {
         JedisConnectionFactory factory = new JedisConnectionFactory();
         factory.setHostName(host);
         factory.setPort(port);
-        factory.setPassword(password);
+//        factory.setPassword(password);
         factory.setTimeout(timeout);
         factory.setDatabase(database);
         JedisPoolConfig config = new JedisPoolConfig();

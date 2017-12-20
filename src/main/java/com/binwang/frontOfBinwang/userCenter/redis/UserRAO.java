@@ -3,7 +3,7 @@ package com.binwang.frontOfBinwang.userCenter.redis;
 import com.binwang.frontOfBinwang.userCenter.bean.httpBean.AccessTokenInfo;
 
 /**
- * Created by owen on 17/6/23.
+ * Created by yy on 17/6/23.
  */
 public interface UserRAO {
     //写accessToken -- 键 fbinwang158:access_token:openId

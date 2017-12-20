@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by owen on 17/6/26.
+ * Created by yy on 17/6/26.
  */
 @Service
 public class ActServiceImpl implements ActService {
@@ -90,6 +90,8 @@ public class ActServiceImpl implements ActService {
         try {
             Boolean flag = false;
             int cur = actRAO.getSignedNum(actId);
+            System.out.println(cur);
+            System.out.println(limit);
             if (cur >= limit)
                 return false;
             String lock = "fbinwang158:act:lock:sign-num";

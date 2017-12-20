@@ -38,6 +38,7 @@ public class ActRAOImpl extends RedisFather implements ActRAO {
     @Override
     public Boolean writeSignedNum(long actId) {
         String key = PREFIX_SIGHED + actId;
+        System.out.println(key);
         return super.writeStringValue(key, "0", -1, "初始化活动已报名人数至Redis出错,actId为:" + actId);
     }
 
