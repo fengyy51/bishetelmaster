@@ -1,9 +1,7 @@
 package com.binwang.frontOfBinwang.luckDraw.service;
 
 import com.binwang.frontOfBinwang.exception.ParamNotValidException;
-import com.binwang.frontOfBinwang.luckDraw.bean.WinCalDO;
-import com.binwang.frontOfBinwang.luckDraw.bean.WinModel;
-import com.binwang.frontOfBinwang.luckDraw.bean.WinUserDO;
+import com.binwang.frontOfBinwang.luckDraw.bean.*;
 import com.binwang.frontOfBinwang.luckDraw.dao.LuckDrawDAO;
 import com.binwang.frontOfBinwang.luckDraw.redis.LuckRAO;
 import com.binwang.frontOfBinwang.utils.UUIDUtil;
@@ -71,7 +69,16 @@ public class LuckServiceImpl implements LuckService {
             this.type = type;
         }
     }
+    @Override
+    @Transactional
+    public PrizeParam getPrizeParam(long id){return luckDrawDAO.getPrizeParam(id);}
 
+    @Override
+    @Transactional
+    public List<String> getPrizeInfo(String actName){
+        List<String>res=luckDrawDAO.getPrizeInfo(actName);
+        return res;
+    }
     @Override
     public Map<String, Object> getWinInfo(int collectId) {
         if (collectId <= 0)

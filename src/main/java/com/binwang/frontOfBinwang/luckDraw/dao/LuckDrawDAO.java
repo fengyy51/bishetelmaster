@@ -1,19 +1,24 @@
 package com.binwang.frontOfBinwang.luckDraw.dao;
 
-import com.binwang.frontOfBinwang.luckDraw.bean.WinCalDO;
-import com.binwang.frontOfBinwang.luckDraw.bean.WinModel;
-import com.binwang.frontOfBinwang.luckDraw.bean.WinUserDO;
+import com.binwang.frontOfBinwang.luckDraw.bean.*;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
- * Created by owen on 17/7/20.
+ * Created by yy on 17/7/20.
  */
 @Repository
 @Mapper
 public interface LuckDrawDAO {
+
+    @Select("select name,begin,end,prize_num as prizeNum,share_num as shareNum,prize_max_num as prizeMaxNum,prize_decoration as prizeDecoration from prize_params where id=#{id}")
+    PrizeParam getPrizeParam(@Param("id")long id);
+
+    @Select("select distinct type from prize where act_name=#{actName}")
+    List<String> getPrizeInfo(@Param("actName")String actName);
+
     @Select("select id as prizeId,ratio,num,type from prize where relation_id = #{collectId} and num > 0")
     List<WinCalDO> getCalList(@Param("collectId") int collectId);
 

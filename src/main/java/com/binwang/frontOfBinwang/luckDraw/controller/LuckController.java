@@ -1,8 +1,13 @@
 package com.binwang.frontOfBinwang.luckDraw.controller;
 
+import com.binwang.frontOfBinwang.luckDraw.bean.PrizeModel;
+import com.binwang.frontOfBinwang.luckDraw.bean.PrizeParam;
 import com.binwang.frontOfBinwang.luckDraw.bean.WinModel;
 import com.binwang.frontOfBinwang.luckDraw.service.LuckService;
 import com.binwang.frontOfBinwang.utils.ResponseUtil;
+import org.apache.ibatis.annotations.Param;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,10 +26,33 @@ import java.util.Map;
 @Controller
 @RequestMapping("/luck")
 public class LuckController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(LuckController.class);
+
     @Resource
     private LuckService luckService;
 
-
+    @RequestMapping("/get-prize-param")
+    @ResponseBody
+    public Object getPrizeParam(@Param("id")long id){
+        try {
+            PrizeParam res=luckService.getPrizeParam(id);
+            return ResponseUtil.okJSON(res);
+        } catch (Exception e){
+            LOGGER.error("获取抽奖设置出错");
+            return ResponseUtil.errorJSON("获取抽奖设置失败");
+        }
+    }
+    @RequestMapping("/get-prize-info")
+    @ResponseBody
+    public Object getPrizeInfo(@Param("String")String actName){
+        try {
+            List<String> res=luckService.getPrizeInfo(actName);
+            return ResponseUtil.okJSON(res);
+        } catch (Exception e){
+            LOGGER.error("获取奖项信息出错");
+            return ResponseUtil.errorJSON("获取奖项信息失败");
+        }
+    }
     @RequestMapping("/get-win-info")
     @ResponseBody
     public Object getWin(@RequestParam("collectId") int collectId) {
@@ -41,11 +69,11 @@ public class LuckController {
     public Object judgeDraw(@RequestParam("openId") String openId) {
         try {
             Map<String, Object> m = new HashMap<>();
-            if (System.currentTimeMillis() > drawDeadLine) {
-                m.put("msg", "抽奖已截止");
-                m.put("result", false);
-                return ResponseUtil.okJSON(m);
-            } else {
+//            if (System.currentTimeMillis() > drawDeadLine) {
+//                m.put("msg", "抽奖已截止");
+//                m.put("result", false);
+//                return ResponseUtil.okJSON(m);
+//            } else {
                 Boolean res = luckService.judgeDraw(openId);
                 if (res)
                     m.put("msg", "正常");
@@ -53,14 +81,14 @@ public class LuckController {
                     m.put("msg", "出错");
                 m.put("result", res);
                 return ResponseUtil.okJSON(m);
-            }
+//            }
         } catch (Exception e) {
             return ResponseUtil.errorJSON("获取是否可以抽奖信息失败");
         }
     }
 
-    @Value("${fbinwang.draw.deadline}")
-    private long drawDeadLine;
+//    @Value("${fbinwang.draw.deadline}")
+//    private long drawDeadLine;
 
     @RequestMapping(value = "/post-draw", method = RequestMethod.POST)
     @ResponseBody
@@ -68,14 +96,14 @@ public class LuckController {
                              @RequestParam("prizeId") long prizeId,
                              @RequestParam("collectId") int collectId) {
         try {
-            if (System.currentTimeMillis() > drawDeadLine) {
-                return ResponseUtil.errorJSON("抽奖已截止");
-            } else {
+//            if (System.currentTimeMillis() > drawDeadLine) {
+//                return ResponseUtil.errorJSON("抽奖已截止");
+//            } else {
                 long resId = luckService.handleWin(openId, prizeId, collectId);
                 Map<String, Long> m = new HashMap<>();
                 m.put("id", resId);
                 return ResponseUtil.okJSON(m);
-            }
+//            }
         } catch (Exception e) {
             return ResponseUtil.errorJSON("出错，请重试");
         }
