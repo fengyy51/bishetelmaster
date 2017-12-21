@@ -1,11 +1,11 @@
 package com.binwang.frontOfBinwang.luckDraw.bean;
 
 /**
- * Created by owen on 17/7/20.
+ * Created by yy on 17/7/20.
  */
 public class WinCalDO {
     private long prizeId;
-    private int type;
+    private String type;
     private int ratio;
     private int num;
 
@@ -20,11 +20,11 @@ public class WinCalDO {
         this.prizeId = prizeId;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 

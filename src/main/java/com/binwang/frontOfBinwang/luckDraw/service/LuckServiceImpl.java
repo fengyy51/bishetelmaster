@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * Created by owen on 17/7/20.
+ * Created by yy on 17/7/20.
  */
 @Service
 public class LuckServiceImpl implements LuckService {
@@ -37,9 +37,9 @@ public class LuckServiceImpl implements LuckService {
     class IntervalBean {
         private int front;
         private int end;
-        private int type;
+        private String type;
 
-        public IntervalBean(int front, int end, int type) {
+        public IntervalBean(int front, int end, String type) {
             this.front = front;
             this.end = end;
             this.type = type;
@@ -61,14 +61,18 @@ public class LuckServiceImpl implements LuckService {
             this.end = end;
         }
 
-        public int getType() {
+        public String getType() {
             return type;
         }
 
-        public void setType(int type) {
+        public void setType(String type) {
             this.type = type;
         }
     }
+    @Override
+    @Transactional
+    public int getPrizeNum(long actId,String openId){return luckDrawDAO.getPrizeNum(actId,openId);}
+
     @Override
     @Transactional
     public PrizeParam getPrizeParam(long id){return luckDrawDAO.getPrizeParam(id);}
@@ -80,11 +84,11 @@ public class LuckServiceImpl implements LuckService {
         return res;
     }
     @Override
-    public Map<String, Object> getWinInfo(int collectId) {
-        if (collectId <= 0)
+    public Map<String, Object> getWinInfo(String actName) {
+        if (StringUtils.isEmpty(actName))
             throw new ParamNotValidException("参数不合法");
         try {
-            List<WinCalDO> l = luckDrawDAO.getCalList(collectId);
+            List<WinCalDO> l = luckDrawDAO.getCalList(actName);
             int totalWeight = 0;
             Map<Long, IntervalBean> interval = new HashMap<>();
             int prev = 0;
@@ -96,7 +100,7 @@ public class LuckServiceImpl implements LuckService {
             }
             int randNum = new Random().nextInt(totalWeight);
             long prizeId = -1;
-            int type = -1;
+            String type="";
             for (Map.Entry<Long, IntervalBean> m : interval.entrySet()) {
                 int front = m.getValue().getFront();
                 int end = m.getValue().getEnd();
@@ -118,18 +122,18 @@ public class LuckServiceImpl implements LuckService {
 
     @Override
     @Transactional
-    public long handleWin(String openId, long prizeId, int collectId) {
-        if (StringUtils.isEmpty(openId) || prizeId <= 0 || collectId <= 0)
+    public long handleWin(String openId, long prizeId, int collectId,String actName) {
+        if (StringUtils.isEmpty(openId) || prizeId <= 0 || collectId <= 0||StringUtils.isEmpty(actName))
             throw new ParamNotValidException("参数不合法");
         //库存减一
-        int updateRes = luckDrawDAO.updateNum(prizeId, collectId);
+        int updateRes = luckDrawDAO.updateNum(prizeId, actName);
         if (updateRes <= 0) {
-            LOGGER.error("减获奖并发导致库存为0失败，collectId为" + collectId + ";prizeId为" + prizeId);
+            LOGGER.error("减获奖并发导致库存为0失败，collectId为" + collectId + ";actName为" + actName);
             throw new RuntimeException("出错");
         }
         //写入中奖信息至库
         String code = UUIDUtil.getShortUUID();
-        WinUserDO winUserDO = new WinUserDO(openId, collectId, prizeId, code, 0);
+        WinUserDO winUserDO = new WinUserDO(openId, collectId,actName, prizeId, code, 0);
         int insertRes = luckDrawDAO.insertWinInfo(winUserDO);
         if (insertRes <= 0) {
             LOGGER.error("写用户获奖信息失败，openId为" + openId + ";prizeId为" + prizeId);

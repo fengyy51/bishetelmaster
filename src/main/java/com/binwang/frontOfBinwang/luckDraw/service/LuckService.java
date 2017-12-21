@@ -8,16 +8,18 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by yy on 17/7/20.
+ * Created by yy 。
  */
 public interface LuckService {
+    //获取每个用户当天抽奖数
+    int getPrizeNum(long actId,String openId);
     PrizeParam getPrizeParam(long id);
 
     List<String> getPrizeInfo(String actName);
 
-    Map<String, Object> getWinInfo(int collectId);
+    Map<String, Object> getWinInfo(String actName);
 
-    long handleWin(String openId, long prizeId, int collectId);
+    long handleWin(String openId, long prizeId, int collectId,String actName);
 
     Boolean judgeDraw(String openId);
 

@@ -5,7 +5,6 @@ import com.binwang.frontOfBinwang.luckDraw.bean.PrizeParam;
 import com.binwang.frontOfBinwang.luckDraw.bean.WinModel;
 import com.binwang.frontOfBinwang.luckDraw.service.LuckService;
 import com.binwang.frontOfBinwang.utils.ResponseUtil;
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,10 +29,20 @@ public class LuckController {
 
     @Resource
     private LuckService luckService;
-
+    @RequestMapping("/get-prize-num")
+    @ResponseBody
+    public Object getPrizeNum(@RequestParam("actId")long actId,@RequestParam("openId")String openId){
+        try {
+            int res=luckService.getPrizeNum(actId,openId);
+            return ResponseUtil.okJSON(res);
+        }catch (Exception e){
+            LOGGER.error("获取抽奖次数出错");
+            return ResponseUtil.errorJSON("获取投票次数失败");
+        }
+    }
     @RequestMapping("/get-prize-param")
     @ResponseBody
-    public Object getPrizeParam(@Param("id")long id){
+    public Object getPrizeParam(@RequestParam("id")long id){
         try {
             PrizeParam res=luckService.getPrizeParam(id);
             return ResponseUtil.okJSON(res);
@@ -44,7 +53,7 @@ public class LuckController {
     }
     @RequestMapping("/get-prize-info")
     @ResponseBody
-    public Object getPrizeInfo(@Param("String")String actName){
+    public Object getPrizeInfo(@RequestParam("actName")String actName){
         try {
             List<String> res=luckService.getPrizeInfo(actName);
             return ResponseUtil.okJSON(res);
@@ -55,9 +64,9 @@ public class LuckController {
     }
     @RequestMapping("/get-win-info")
     @ResponseBody
-    public Object getWin(@RequestParam("collectId") int collectId) {
+    public Object getWin(@RequestParam("actName") String actName) {
         try {
-            Map<String, Object> m = luckService.getWinInfo(collectId);
+            Map<String, Object> m = luckService.getWinInfo(actName);
             return ResponseUtil.okJSON(m);
         } catch (Exception e) {
             return ResponseUtil.errorJSON("获取信息出错");
@@ -94,12 +103,13 @@ public class LuckController {
     @ResponseBody
     public Object handlePost(@RequestParam("openId") String openId,
                              @RequestParam("prizeId") long prizeId,
-                             @RequestParam("collectId") int collectId) {
+                             @RequestParam("collectId") int collectId,
+                             @RequestParam("actName")String actName) {
         try {
 //            if (System.currentTimeMillis() > drawDeadLine) {
 //                return ResponseUtil.errorJSON("抽奖已截止");
 //            } else {
-                long resId = luckService.handleWin(openId, prizeId, collectId);
+                long resId = luckService.handleWin(openId, prizeId, collectId,actName);
                 Map<String, Long> m = new HashMap<>();
                 m.put("id", resId);
                 return ResponseUtil.okJSON(m);

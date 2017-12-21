@@ -8,7 +8,7 @@ public class WinModel {
     private long prizeId;
     private String name;
     private String info;
-    private int type;
+    private String type;
     private String duijiangTime;
     private String duijiangLoc;
     private String code;
@@ -65,11 +65,11 @@ public class WinModel {
         this.info = info;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 

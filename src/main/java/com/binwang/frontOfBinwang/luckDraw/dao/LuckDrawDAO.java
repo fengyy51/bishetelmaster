@@ -13,17 +13,20 @@ import java.util.List;
 @Mapper
 public interface LuckDrawDAO {
 
+    @Select("select count(id) from f_user_prize where relation_id=#{actId} and open_id=#{openId} and "+
+            "add_time >unix_timestamp(CURDATE()) and add_time<unix_timestamp(CURDATE())+86400")
+    int getPrizeNum(@Param("actId")long actId,@Param("openId")String openId);
     @Select("select name,begin,end,prize_num as prizeNum,share_num as shareNum,prize_max_num as prizeMaxNum,prize_decoration as prizeDecoration from prize_params where id=#{id}")
     PrizeParam getPrizeParam(@Param("id")long id);
 
     @Select("select distinct type from prize where act_name=#{actName}")
     List<String> getPrizeInfo(@Param("actName")String actName);
 
-    @Select("select id as prizeId,ratio,num,type from prize where relation_id = #{collectId} and num > 0")
-    List<WinCalDO> getCalList(@Param("collectId") int collectId);
+    @Select("select id as prizeId,ratio,num,type from prize where act_name = #{actName} and num > 0")
+    List<WinCalDO> getCalList(@Param("actName")String actName);
 
-    @Update("update prize set num = num -1 where id = #{prizeId} and relation_id = #{collectId} and num > 0 ")
-    int updateNum(@Param("prizeId") long prizeId, @Param("collectId") int collectId);
+    @Update("update prize set num = num -1 where id = #{prizeId} and act_name = #{actName} and num > 0 ")
+    int updateNum(@Param("prizeId") long prizeId, @Param("actName") String actName);
 
 
     int insertWinInfo(WinUserDO winUserDO);

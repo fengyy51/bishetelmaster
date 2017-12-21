@@ -1,11 +1,12 @@
 package com.binwang.frontOfBinwang.luckDraw.bean;
 
 /**
- * Created by owen on 17/7/20.
+ * Created by yy on 17/7/20.
  */
 public class WinUserDO {
     private long id;
     private String openId;
+    private String actName;
     private int relationId;
     private long prizeId;
     private String code;
@@ -14,12 +15,21 @@ public class WinUserDO {
     public WinUserDO() {
     }
 
-    public WinUserDO(String openId, int relationId, long prizeId, String code, int isUse) {
+    public WinUserDO(String openId, int relationId,String actName, long prizeId, String code, int isUse) {
         this.openId = openId;
         this.relationId = relationId;
+        this.actName=actName;
         this.prizeId = prizeId;
         this.code = code;
         this.isUse = isUse;
+    }
+
+    public void setActName(String actName) {
+        this.actName = actName;
+    }
+
+    public String getActName() {
+        return actName;
     }
 
     public long getId() {
