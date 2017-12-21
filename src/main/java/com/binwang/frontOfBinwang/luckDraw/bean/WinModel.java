@@ -1,11 +1,12 @@
 package com.binwang.frontOfBinwang.luckDraw.bean;
 
 /**
- * Created by owen on 17/7/20.
+ * Created by yy on 17/7/20.
  */
 public class WinModel {
     private long id;
     private long prizeId;
+    private long relationId;
     private String name;
     private String info;
     private String type;
@@ -87,5 +88,13 @@ public class WinModel {
 
     public void setDuijiangLoc(String duijiangLoc) {
         this.duijiangLoc = duijiangLoc;
+    }
+
+    public void setRelationId(long relationId) {
+        this.relationId = relationId;
+    }
+
+    public long getRelationId() {
+        return relationId;
     }
 }

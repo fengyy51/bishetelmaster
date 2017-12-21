@@ -148,7 +148,11 @@ public class LuckServiceImpl implements LuckService {
     public Boolean judgeDraw(String openId) {
         return luckRAO.judgeDraw(openId, time);
     }
-
+    //获取兑奖码
+    @Override
+    public String getVeriCode(long id){
+        return luckDrawDAO.getVeriCode(id);
+    }
     @Override
     public WinModel getDetail(long id) {
         if (id <= 0)

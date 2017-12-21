@@ -31,8 +31,10 @@ public interface LuckDrawDAO {
 
     int insertWinInfo(WinUserDO winUserDO);
 
+    @Select("select code from prize_params where id=#{id}")
+    String getVeriCode(@Param("id") long id);
 
-    @Select("select b.prize_id as prizeId,a.name as name,a.info as info,a.type as type,a.duijiang_time as duijiangTime," +
+    @Select("select b.relation_id as relationId,b.prize_id as prizeId,a.name as name,a.info as info,a.type as type,a.duijiang_time as duijiangTime," +
             "a.duijiang_loc as duijiangLoc,b.code as code,b.is_use as isUse from prize a " +
             "right join f_user_prize b on a.id = b.prize_id where b.id = #{id} limit 1")
     WinModel getWinDetail(@Param("id") long id);

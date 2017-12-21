@@ -118,7 +118,17 @@ public class LuckController {
             return ResponseUtil.errorJSON("出错，请重试");
         }
     }
-
+//兑奖码
+    @RequestMapping("/veri-code")
+    @ResponseBody
+    public Object getVeriCode(@RequestParam("id") long id) {
+        try {
+            String res = luckService.getVeriCode(id);
+            return ResponseUtil.okJSON(res);
+        } catch (Exception e) {
+            return ResponseUtil.errorJSON("获取兑奖码失败");
+        }
+    }
     @RequestMapping("/win-detail")
     @ResponseBody
     public Object getDetail(@RequestParam("id") long id) {

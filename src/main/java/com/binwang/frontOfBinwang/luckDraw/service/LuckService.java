@@ -23,6 +23,8 @@ public interface LuckService {
 
     Boolean judgeDraw(String openId);
 
+    //获取兑奖码
+    String getVeriCode(long id);
     //获取奖券详情
     WinModel getDetail(long id);
 
