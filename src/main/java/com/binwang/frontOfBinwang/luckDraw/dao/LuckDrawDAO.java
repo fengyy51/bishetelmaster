@@ -16,7 +16,7 @@ public interface LuckDrawDAO {
     @Select("select count(id) from f_user_prize where relation_id=#{actId} and open_id=#{openId} and "+
             "add_time >unix_timestamp(CURDATE()) and add_time<unix_timestamp(CURDATE())+86400")
     int getPrizeNum(@Param("actId")long actId,@Param("openId")String openId);
-    @Select("select name,begin,end,prize_num as prizeNum,share_num as shareNum,prize_max_num as prizeMaxNum,prize_decoration as prizeDecoration from prize_params where id=#{id}")
+    @Select("select name,begin,end,prize_num as prizeNum,share_num as shareNum,prize_max_num as prizeMaxNum,prize_decoration as prizeDecoration,top_img as topImg,prizelist_img as prizelistImg,color from prize_params where id=#{id}")
     PrizeParam getPrizeParam(@Param("id")long id);
 
     @Select("select distinct type from prize where act_name=#{actName}")

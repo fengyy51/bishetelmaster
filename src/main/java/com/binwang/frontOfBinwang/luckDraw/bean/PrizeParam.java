@@ -9,8 +9,11 @@ public class PrizeParam {
     private String shareNum;
     private int prizeMaxNum;
     private String prizeDecoration;
+    private String topImg;
+    private String prizelistImg;
+    private String color;//背景颜色
     public PrizeParam(){}
-    public PrizeParam(Long id,String name,String begin,String end,int prizeMaxNum,int prizeNum,String shareNum,String prizeDecoration){
+    public PrizeParam(Long id,String name,String begin,String end,int prizeMaxNum,int prizeNum,String shareNum,String prizeDecoration,String topImg,String prizelistImg,String color){
         this.id=id;
         this.name=name;
         this.begin=begin;
@@ -19,7 +22,9 @@ public class PrizeParam {
         this.shareNum=shareNum;
         this.prizeMaxNum=prizeMaxNum;
         this.prizeDecoration=prizeDecoration;
-
+        this.topImg=topImg;
+        this.prizelistImg=prizelistImg;
+        this.color=color;
     }
     public String getShareNum() {
         return shareNum;
@@ -83,6 +88,29 @@ public class PrizeParam {
 
     public int getPrizeMaxNum() {
         return prizeMaxNum;
+    }
+    public String getPrizelistImg() {
+        return prizelistImg;
+    }
+
+    public void setPrizelistImg(String prizelistImg) {
+        this.prizelistImg = prizelistImg;
+    }
+
+    public String getTopImg() {
+        return topImg;
+    }
+
+    public void setTopImg(String topImg) {
+        this.topImg = topImg;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getColor() {
+        return color;
     }
 }
 
