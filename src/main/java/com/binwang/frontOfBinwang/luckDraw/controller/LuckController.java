@@ -37,7 +37,7 @@ public class LuckController {
             return ResponseUtil.okJSON(res);
         }catch (Exception e){
             LOGGER.error("获取抽奖次数出错");
-            return ResponseUtil.errorJSON("获取投票次数失败");
+            return ResponseUtil.errorJSON("获取抽奖次数失败");
         }
     }
     @RequestMapping("/get-prize-param")
@@ -115,7 +115,7 @@ public class LuckController {
                 return ResponseUtil.okJSON(m);
 //            }
         } catch (Exception e) {
-            return ResponseUtil.errorJSON("出错，请重试");
+            return ResponseUtil.errorJSON("增加中奖信息出错，请重试");
         }
     }
 //兑奖码

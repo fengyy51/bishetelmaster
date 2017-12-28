@@ -34,36 +34,72 @@ public class VoteRAOImpl extends RedisFather implements VoteRAO {
     private RedisTemplate<String, String> redisTemplate;
 
 
-    @Value("${fbinwang.vote.time}")
-    private int votePerTime;
+//    @Value("${fbinwang.vote.time}")
+//    private int votePerTime;
 
     @Override
-    public Boolean judgeAuthOpenId(String openId) {
-        String key = AUTH_PRE + openId;
+    public Boolean judgeAuthOpenId(String openId,long actId) {
+        String key = AUTH_PRE + openId+String.valueOf(actId);
         return super.hasStringValue(key);
     }
-
     @Override
-    public Boolean judgeIsVote(String openId) {
+    public Boolean judgeIp(String ip,long actId) {
+        String key = AUTH_PRE + ip+String.valueOf(actId);
+        return super.hasStringValue(key);
+    }
+    @Override
+    public Boolean judgeIpVote(String ip,int voteMax,long actId) {
         ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
-        String key = VOTE_TIME_PRE + openId;
+        String key = VOTE_TIME_PRE + ip+String.valueOf(actId);
         if (redisTemplate.hasKey(key)) {
             int newTime = Integer.parseInt(ops.get(key));
-            if (newTime > 0) {
+            if (newTime <voteMax) {
                 return true;
             } else {
                 return false;
             }
         } else {
-            ops.set(key, votePerTime + "", (HandleDateUtil.getTimesnight() - System.currentTimeMillis()) / 1000, TimeUnit.SECONDS);
+            ops.set(key, 1 + "", (HandleDateUtil.getTimesnight() - System.currentTimeMillis()) / 1000, TimeUnit.SECONDS);
             return true;
         }
     }
-
     @Override
-    public void reduceVoteTime(String openId) {
+    public Boolean judgeIsVote(String openId,int voteMaxNum,long actId) {
         ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
-        String key = VOTE_TIME_PRE + openId;
-        ops.increment(key, -1);
+        String key = VOTE_TIME_PRE + openId+String.valueOf(actId);
+        if (redisTemplate.hasKey(key)) {
+            int newOpenIdTime = Integer.parseInt(ops.get(key));
+            if (newOpenIdTime <voteMaxNum) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            ops.set(key, 1 + "", (HandleDateUtil.getTimesnight() - System.currentTimeMillis()) / 1000, TimeUnit.SECONDS);
+            return true;
+        }
+    }
+    @Override
+    public  void addVoteNum(String ip,long actId){
+        ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
+        String key = VOTE_TIME_PRE + ip+String.valueOf(actId);
+        ops.increment(key, +1);
+    }
+    @Override
+    public void addVoteTime(String openId,long actId) {
+        ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
+        String key = VOTE_TIME_PRE + openId+String.valueOf(actId);
+        ops.increment(key, +1);
+    }
+    @Override
+    public int getVoteNum(String openId,long actId){
+        ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
+        String key = VOTE_TIME_PRE + openId+String.valueOf(actId);
+        if (redisTemplate.hasKey(key)) {
+            int newTime = Integer.parseInt(ops.get(key));
+            return newTime;
+        }else {
+            return 0;
+        }
     }
 }

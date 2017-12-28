@@ -92,7 +92,6 @@ public class VoteController {
 //    @Value("${fbinwang.vote.deadline}")
 //    private long voteDeadline;
 
-
     @RequestMapping(value = "/post-vote-number-info", method = RequestMethod.POST)
     @ResponseBody
     public Object postVoteNumInfo(String str,long actId,HttpServletRequest req) {

@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by owen on 17/6/23.
+ * Created by yy on 17/6/23.
  */
 public class HttpUtil {
     private static final CloseableHttpClient httpclient = HttpClients.createDefault();

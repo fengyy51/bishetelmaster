@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by owen on 17/7/20.
+ * Created by yy on 17/7/20.
  */
 @Repository
 public class LuckRAOImpl implements LuckRAO {

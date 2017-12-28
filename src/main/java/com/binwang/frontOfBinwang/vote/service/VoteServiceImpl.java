@@ -66,7 +66,10 @@ public class VoteServiceImpl implements VoteService {
     public VoteParam getVoteParam(long actId){return voteDAO.getVoteParam(actId);}
     @Override
     @Transactional
-    public int getVoteNum(long actId,String openId){return voteDAO.getVoteNum(actId,openId);}
+    public int getVoteNum(long actId,String openId){
+        return voteRAO.getVoteNum(openId,actId);
+//        return voteDAO.getVoteNum(actId,openId);
+    }
     @Override
     public List<ProductInfo> getProductInfo(long actId) {
         return voteDAO.getProductInfo(actId);
@@ -85,16 +88,28 @@ public class VoteServiceImpl implements VoteService {
             m.put("msg","投票成功");
             return m;
         }
+        //ip限制开始
+        VoteParam voteParam=voteDAO.getVoteParam(actId);
+        int voteMaxNum=voteParam.getVoteMaxNum();
+        if(!voteRAO.judgeIpVote(ip,voteMaxNum,actId)) {
+            m.put("result", false);
+            m.put("msg", "已投票");
+            return m;
+        }
+        //ip限制结束
+        //openId限制开始
+        if(!voteRAO.judgeIsVote(openId,voteMaxNum,actId)) {
+            m.put("result", false);
+            m.put("msg", "已投票");
+            return m;
+        }
+        //openid限制结束
 //        if(!voteRAO.judgeAuthOpenId(openId)){
 //            m.put("result", false);
 //            m.put("msg", "openid不是有效值");
 //            return m;
 //        }
-//        if(!voteRAO.judgeIsVote(openId)) {
-//            m.put("result", false);
-//            m.put("msg", "已投票");
-//            return m;
-//        }
+//
         if (jsCurTime < HandleDateUtil.getTimesmorning() || jsCurTime > HandleDateUtil.getTimesnight()) {
             m.put("result", false);
             m.put("msg", "请确保当日投票");
@@ -118,7 +133,7 @@ public class VoteServiceImpl implements VoteService {
                 throw new RuntimeException("出错");
             }
         }
-        voteRAO.reduceVoteTime(openId);
+        voteRAO.addVoteTime(openId,actId);
         m.put("result", true);
         m.put("msg", "投票成功");
         return m;
